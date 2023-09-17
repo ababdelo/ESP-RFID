@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   esp-rfid.ino                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ababdelo <ababdelo@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/16 22:30:48 by ababdelo          #+#    #+#             */
+/*   Updated: 2023/09/16 23:13:59 by ababdelo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifdef ESP32
 #include <WiFi.h>
 #include <HTTPClient.h>
@@ -7,31 +19,25 @@
 #include <WiFiClient.h>
 #endif
 
+#include <SPI.h>
+#include <MFRC522.h>
+
 // Replace with your network credentials
-const char *ssid = "your_wifi_ssid";
-const char *password = "your_wifi_password";
+const char *ssid = "1337-guest";
+const char *password = "wifi@1337++@";
 
 // REPLACE with your Domain name and URL path or IP address with path
-const char *serverName = "http://your_ip_address/ESP-RFID/src/post.php";
+const char *serverName = "http://10.32.129.186/ESP-RFID/src/post.php";
 
 // Keep this API Key value to be compatible with the PHP code provided in the project page.
 // If you change the apiKeyValue value, the PHP file /post.php also needs to have the same key
-String apiKeyValue = "483f2f4bc98c7dbb9adb6bf693881c0e";
+char *apiKeyValue = "483f2f4bc98c7dbb9adb6bf693881c0e";
 
-char *sensorLocation[2] = {"INSIDE", "OUTSIDE"};
-String sensorName = "MFRC522";
-char *uid[12] = {"0x63V92W6D",
-				 "0x11SI1HPZ",
-				 "0xT4IKQXTE",
-				 "0xP1FTPH3A",
-				 "0xA9C2X2NW",
-				 "0xW79B5NXS",
-				 "0xH56K47HO",
-				 "0x3C3UCSRB",
-				 "0xYA03L3B7",
-				 "0xJHXCTOLT",
-				 "0x5FULS85P",
-				 "0x4RJYRLU1"};
+char *uname[6] = {"ababdelo", "ted-dafi", "hnaama", "msouiyeh", "elel-yaak", "malloui"};
+char *uid[6] = {"0x63V92W6D", "0x11SI1HPZ", "0xT4IKQXTE", "0xP1FTPH3A", "0xA9C2X2NW", "0xW79B5NXS"};
+char *role[3] = {"Member", "Staff", "Admin"};
+char *action[2] = {"Entered to the club", "Exited from the Club"};
+char *unuid[3] = {"0xURJYRLU1", "0xPPG7Q5EO", "0xBNDGYQOK"};
 
 void setup()
 {
@@ -50,8 +56,9 @@ void setup()
 }
 void loop()
 {
-	int x = (int)random(0, 12);
-	int z = (int)random(0, 2);
+	int x = (int)random(0, 5);
+	int y = (int)random(0, 2);
+	int z = (int)random(0, 1);
 
 	// Check WiFi connection status
 	if (WiFi.status() == WL_CONNECTED)
@@ -65,7 +72,7 @@ void loop()
 		http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
 		// Prepare your HTTP POST request data
-		String httpRequestData = "api_key=" + apiKeyValue + "&sensor=" + sensorName + "&location=" + String(sensorLocation[z]) + "&value=" + String(uid[x]);
+		String httpRequestData = "api_key=" + String(apiKeyValue) + "&username=" + String(uname[x]) + "&uid=" + String(uid[x]) + "&role=" + String(role[y]) + "&action=" + String(action[x]);
 		Serial.print("httpRequestData: ");
 		Serial.println(httpRequestData);
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 16, 2023 at 08:16 PM
+-- Generation Time: Sep 17, 2023 at 02:42 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -18,21 +18,22 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `databasecode`
+-- Database: `LE3TMAKERS`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sensordata`
+-- Table structure for table `Activity`
 --
 
-CREATE TABLE `sensordata` (
-  `id` int(6) UNSIGNED NOT NULL,
-  `sensor` varchar(30) NOT NULL,
-  `location` varchar(30) NOT NULL,
-  `value` varchar(10) DEFAULT NULL,
-  `reading_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+CREATE TABLE `Activity` (
+  `id` int(255) NOT NULL,
+  `username` varchar(16) NOT NULL,
+  `uid` varchar(16) NOT NULL,
+  `role` varchar(16) NOT NULL,
+  `action` varchar(255) NOT NULL,
+  `time` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -40,9 +41,9 @@ CREATE TABLE `sensordata` (
 --
 
 --
--- Indexes for table `sensordata`
+-- Indexes for table `Activity`
 --
-ALTER TABLE `sensordata`
+ALTER TABLE `Activity`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -50,10 +51,10 @@ ALTER TABLE `sensordata`
 --
 
 --
--- AUTO_INCREMENT for table `sensordata`
+-- AUTO_INCREMENT for table `Activity`
 --
-ALTER TABLE `sensordata`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+ALTER TABLE `Activity`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

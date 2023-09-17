@@ -2,18 +2,19 @@
 $sname = "localhost";
 $uname = "ababdelo";
 $password = "Thewayofthemakersis 1337";
-$db_name = "databasecode";
+$db_name = "LE3TMAKERS";
 
 $api_key_value = "483f2f4bc98c7dbb9adb6bf693881c0e";
 
-$api_key = $sensor = $location = $value1 = "";
+$api_key = $username = $uid = $role = $action  = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $api_key = test_input($_POST["api_key"]);
     if ($api_key == $api_key_value) {
-        $sensor = test_input($_POST["sensor"]);
-        $location = test_input($_POST["location"]);
-        $value = test_input($_POST["value"]);
+        $username = test_input($_POST["username"]);
+        $uid = test_input($_POST["uid"]);
+        $role = test_input($_POST["role"]);
+        $action = test_input($_POST["action"]);
 
         // Create connection
         $conn = new mysqli($sname, $uname, $password, $db_name);
@@ -22,8 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $sql = "INSERT INTO sensordata (sensor, location, value)
-        VALUES ('" . $sensor . "', '" . $location . "', '" . $value . "')";
+        $sql = "INSERT INTO Activity (username, uid, role, action)
+        VALUES ('" . $username . "', '" . $uid . "', '" . $role . "', '" . $action . "')";
 
         if ($conn->query($sql) === TRUE) {
             echo "New record created successfully";
